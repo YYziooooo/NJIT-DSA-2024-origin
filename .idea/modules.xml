@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/00-init/00-init.iml" filepath="$PROJECT_DIR$/00-init/00-init.iml" />
+      <module fileurl="file://$PROJECT_DIR$/01-arrays/01-arrays.iml" filepath="$PROJECT_DIR$/01-arrays/01-arrays.iml" />
+      <module fileurl="file://$PROJECT_DIR$/02-1-stack/04-1-stack.iml" filepath="$PROJECT_DIR$/02-1-stack/04-1-stack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/02-2-queue/04-2-queue.iml" filepath="$PROJECT_DIR$/02-2-queue/04-2-queue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/03-binarysearch/05-binsearch.iml" filepath="$PROJECT_DIR$/03-binarysearch/05-binsearch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/NJIT-DSA-2024-origin.iml" filepath="$PROJECT_DIR$/.idea/NJIT-DSA-2024-origin.iml" />
+    </modules>
+  </component>
+</project>

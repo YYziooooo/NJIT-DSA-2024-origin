@@ -18,6 +18,7 @@ public class LinearSearchTests {
     @Timeout(value = 120, threadMode = Timeout.ThreadMode.SEPARATE_THREAD)
     @DisplayName("Tests Integer linear search implementation")
     void findFromIntArrayTests() {
+
         try {
             System.out.println("-- Starting the linear integer search test --");
             Integer [] array = ArrayUtils.generateIntegerArray(9999999);

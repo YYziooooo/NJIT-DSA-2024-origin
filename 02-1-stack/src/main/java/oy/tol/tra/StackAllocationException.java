@@ -10,9 +10,13 @@ package oy.tol.tra;
 public class StackAllocationException extends RuntimeException {
    /**
     * Constructor for the exception.
+    *
     * @param message The message visible to developer or user.
     */
    public StackAllocationException(String message) {
       super(message);
-   } 
+   }
+
+
+
 }

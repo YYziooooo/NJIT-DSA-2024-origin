@@ -9,6 +9,8 @@ package oy.tol.tra;
  * @author Antti Juustila
  * @version 1.0
  */
+
+
 public class StackFactory {
 
    private StackFactory() {
@@ -19,7 +21,8 @@ public class StackFactory {
     * @return The stack object.
     */
     public static StackInterface<Integer> createIntegerStack() {
-      return new StackImplementation<>();
+
+        return new StackImplementation<>();
    }
 
    /**
@@ -30,4 +33,7 @@ public class StackFactory {
    public static StackInterface<Integer> createIntegerStack(int capacity) {
       return new StackImplementation<>(capacity);
    }
+    public static StackInterface<Character> createCharacterStack() {
+        return new StackImplementation<>();
+    }
 }

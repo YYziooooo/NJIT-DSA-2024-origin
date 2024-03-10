@@ -40,8 +40,7 @@ public interface QueueInterface<E> {
     * Returns the count of elements currently in the queue.
     * @return Count of elements in the queue.
     */
-   public int size();
-
+   public int size() ;
    /**
     * Can be used to check if the queue is empty.
     * @return True if the queue is empty, false otherwise.
@@ -51,6 +50,6 @@ public interface QueueInterface<E> {
    /**
     * Resets the queue to empty state, removing the objects.
     */
-   public void clear();
+   public void clear() ;
 
 }

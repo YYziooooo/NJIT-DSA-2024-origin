@@ -30,19 +30,29 @@ public class Grades {
        4. Use the debugger to see the execution and variable values if necessary.
        5. Fix the issue.
        6. Transform the algorithm to <strong>use</strong> the generic one from Algorithms.java, as instructed in the readme file.
-      */
+*/
       int i = 0;
-      while (i <= grades.length/2) {
+      while (i < grades.length/2) {
          int temp = grades[i];
          grades[i] = grades[grades.length-i-1];
          grades[grades.length-i-1] = temp;
          i++;
-     }
+     }/*
+      int i = 0;
+      int j = grades.length - 1; // Fix: Initialize j to the last index
+      while (i < j) { // Fix: Change condition to i < j
+         int temp = grades[i];
+         grades[i] = grades[j];
+         grades[j] = temp;
+         i++;
+         j--; // Fix: Decrement j
+      }*/
    }
 
    /**
     * Sorts the array to ascending order.
     */
+
    public void sort() {
       /* TODO:
        1. Edit the test data files to see if the sort() really works or not.
@@ -51,7 +61,7 @@ public class Grades {
        4. Use the debugger to see the execution and variable values if necessary.
        5. Fix the issue.
        6. Transform the algorithm to <strong>use</strong> the generic one from Algorithms.java as instructed in the readme file.
-      */
+
       int i = grades.length-1;
       while (i > 0) {
          if (grades[i] < grades[i-1]) {
@@ -60,14 +70,32 @@ public class Grades {
             grades[i-1] = tmp;
          }
          i--;
-      }
+      }*/
+
+         boolean swapped;
+         do {
+            swapped = false;
+            for (int i = 1; i < grades.length; i++) {
+               if (grades[i] < grades[i - 1]) {
+                  int tmp = grades[i];
+                  grades[i] = grades[i - 1];
+                  grades[i - 1] = tmp;
+                  swapped = true;
+               }
+            }
+         } while (swapped);
+
    }
+
+   public Object[] getArray() {
+
+      return grades;
+   }
+
 
    /**
     * Returns the plain Java int [] array for investigation.
     * @return The int array.
     */
-   public Integer [] getArray() {
-      return grades;
-   }
+
 }

@@ -1,5 +1,7 @@
 package oy.tol.tra;
 
+import java.util.Arrays;
+
 /**
  * This class instantiates a queue implementing the {@code QueueInterface}.
  * 
@@ -12,6 +14,7 @@ public class QueueFactory {
 
    /**
     * Creates an instance of QueueInterface for Integer type.
+    *
     * @param capacity Number of elements the queue can hold.
     * @return The queue object.
     */
@@ -20,12 +23,16 @@ public class QueueFactory {
       // - Instantiates your queue implementation using Integer as template parameter, 
       //   with the given capacity,
       // - and return the object to the caller.
-      
+
+
+     //return null;//
+      return new QueueImplementation<>(capacity);
    }
 
    /**
     * Creates an instance of QueueInterface for Integer type.
     * Use the default constructor of the queue.
+    *
     * @return The queue object.
     */
    //  public static QueueInterface<Integer> createIntegerQueue() {
@@ -35,5 +42,15 @@ public class QueueFactory {
    //    // - and return the object to the caller.
    //    
    // }
+   public static QueueInterface<Integer> createIntegerQueue() {
+      // Instantiate your queue implementation using Integer as template parameter
+      // with default capacity
 
+
+     // return null;//
+      return new QueueImplementation<>();
+   }
 }
+
+
+

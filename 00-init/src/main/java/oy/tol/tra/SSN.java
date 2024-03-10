@@ -32,6 +32,7 @@ public class SSN {
    private static final int PERSON_CODE_LENGTH = 3;
    private static final int CHECKCODE_INDEX = 10;
    private static final String CHECKCHARS = "0123456789ABCDEFHJKLMNPRSTUVWXY";
+   SSN.Result result = SSN.verifySSN("123456-789X");
 
    private SSN() {
       // Empty
@@ -100,24 +101,29 @@ public class SSN {
                String personNumberString = ssn.substring(PERSON_CODE_INDEX_START,
                      PERSON_CODE_INDEX_START + PERSON_CODE_LENGTH);
                // Next checking the three digit number after the century separator.
-               Integer personNumber = Integer.parseInt(personNumberString);
-               if (personNumber > 0) {
-                  // If it was a positive integer, then calculate the checksum.
-                  StringBuilder builder = new StringBuilder();
-                  builder.append(ssn.substring(0, DDMM_PART_END_SUBSTRING_INDEX));
-                  builder.append(ssn.substring(4, DATE_PART_END_SUBSTRING_INDEX));
-                  builder.append(personNumberString);
-                  String checkSumString = builder.toString();
-                  Long checkSum = Long.parseLong(checkSumString) % CHECK_CODE_DIVIDER;
-                  if (CHECKCHARS.charAt(checkSum.intValue()) == ssn.charAt(CHECKCODE_INDEX)) {
-                     if (personNumber > 2 && personNumber < 900) {
-                        // Checksum was correct for a real SSN.
-                        result = Result.VALID_SSN;
-                     } else if (personNumber >= 900 && personNumber <= 999) {
-                        // Checksum was correct for SSNs valid for testing systems.
-                        result = Result.VALID_TEST_SSN;
+               try {
+                  Integer personNumber = Integer.parseInt(personNumberString);
+                  if (personNumber > 0) {
+                     // If it was a positive integer, then calculate the checksum.
+                     StringBuilder builder = new StringBuilder();
+                     builder.append(ssn.substring(0, DDMM_PART_END_SUBSTRING_INDEX));
+                     builder.append(ssn.substring(4, DATE_PART_END_SUBSTRING_INDEX));
+                     builder.append(personNumberString);
+                     String checkSumString = builder.toString();
+                     Long checkSum = Long.parseLong(checkSumString) % CHECK_CODE_DIVIDER;
+                     if (CHECKCHARS.charAt(checkSum.intValue()) == ssn.charAt(CHECKCODE_INDEX)) {
+                        if (personNumber > 2 && personNumber < 900) {
+                           // Checksum was correct for a real SSN.
+                           result = Result.VALID_SSN;
+                        } else if (personNumber >= 900 && personNumber <= 999) {
+                           // Checksum was correct for SSNs valid for testing systems.
+                           result = Result.VALID_TEST_SSN;
+                        }
+
                      }
-                  }
+                     }
+                  }catch(Exception e){
+                  return Result.INVALID_SSN;
                }
             }
          }
