@@ -11,6 +11,7 @@
         <module name="04-2-queue" />
         <module name="04-1-stack" />
         <module name="01-arrays" />
+        <module name="67-phonebook" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -19,6 +20,7 @@
       <module name="04-1-stack" target="17" />
       <module name="04-2-queue" target="15" />
       <module name="05-binsearch" target="17" />
+      <module name="67-phonebook" target="18" />
     </bytecodeTargetLevel>
   </component>
 </project>
