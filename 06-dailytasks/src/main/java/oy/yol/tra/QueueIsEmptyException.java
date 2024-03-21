@@ -1,4 +1,4 @@
-package oy.tol.tra;
+package oy.yol.tra;
 
 /**
  * Exception thrown when using an empty queue fails.
