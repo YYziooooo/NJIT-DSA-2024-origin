@@ -13,5 +13,9 @@
     <file url="file://$PROJECT_DIR$/03-binarysearch/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/04-phonebook/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/04-phonebook/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/05-parenthesis-checker/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/05-parenthesis-checker/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/06-dailytasks/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/06-dailytasks/src/main/resources" charset="UTF-8" />
   </component>
 </project>

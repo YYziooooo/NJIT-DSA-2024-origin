@@ -5,7 +5,9 @@
       <module fileurl="file://$PROJECT_DIR$/00-init/00-init.iml" filepath="$PROJECT_DIR$/00-init/00-init.iml" />
       <module fileurl="file://$PROJECT_DIR$/01-arrays/01-arrays.iml" filepath="$PROJECT_DIR$/01-arrays/01-arrays.iml" />
       <module fileurl="file://$PROJECT_DIR$/02-1-stack/04-1-stack.iml" filepath="$PROJECT_DIR$/02-1-stack/04-1-stack.iml" />
+      <module fileurl="file://$PROJECT_DIR$/05-parenthesis-checker/04-1-stack (1).iml" filepath="$PROJECT_DIR$/05-parenthesis-checker/04-1-stack (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/02-2-queue/04-2-queue.iml" filepath="$PROJECT_DIR$/02-2-queue/04-2-queue.iml" />
+      <module fileurl="file://$PROJECT_DIR$/06-dailytasks/04-2-queue (1).iml" filepath="$PROJECT_DIR$/06-dailytasks/04-2-queue (1).iml" />
       <module fileurl="file://$PROJECT_DIR$/03-binarysearch/05-binsearch.iml" filepath="$PROJECT_DIR$/03-binarysearch/05-binsearch.iml" />
       <module fileurl="file://$PROJECT_DIR$/04-phonebook/67-phonebook.iml" filepath="$PROJECT_DIR$/04-phonebook/67-phonebook.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/NJIT-DSA-2024-origin.iml" filepath="$PROJECT_DIR$/.idea/NJIT-DSA-2024-origin.iml" />
