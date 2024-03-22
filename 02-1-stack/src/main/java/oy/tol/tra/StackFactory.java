@@ -12,7 +12,6 @@ package oy.tol.tra;
 
 
 public class StackFactory {
-
    private StackFactory() {
    }
 
