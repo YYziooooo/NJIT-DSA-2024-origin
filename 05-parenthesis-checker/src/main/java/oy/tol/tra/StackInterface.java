@@ -5,7 +5,6 @@ package oy.tol.tra;
  * 
  */
 public interface StackInterface<E> {
-
    /**
     * For querying the capacity of the stack.
     @return The number of elements the stack can currently hold.

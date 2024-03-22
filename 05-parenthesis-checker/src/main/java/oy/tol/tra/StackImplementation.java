@@ -12,7 +12,6 @@ package oy.tol.tra;
  *  -- remember to maintain the capacity and/or currentIndex when the stack is manipulated.
  */
 public class StackImplementation<E> implements StackInterface<E> {
-
    private Object[] itemArray;
    private int capacity;
 

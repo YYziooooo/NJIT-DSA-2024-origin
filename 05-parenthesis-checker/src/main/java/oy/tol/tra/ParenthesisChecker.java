@@ -88,6 +88,7 @@ public class ParenthesisChecker {
             }
         }
 
+
         // If stack is not empty, there are unmatched opening parentheses
         if (!stack.isEmpty()) {
             throw new ParenthesesException("Too few closing parentheses", ParenthesesException.TOO_FEW_CLOSING_PARENTHESES);

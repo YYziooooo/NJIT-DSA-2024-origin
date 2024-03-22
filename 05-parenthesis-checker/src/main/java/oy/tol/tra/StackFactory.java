@@ -10,7 +10,6 @@ public class StackFactory {
 
     private StackFactory() {
     }
-
     /**
      * Creates an instance of StackImplementation for Integer type.
      *
