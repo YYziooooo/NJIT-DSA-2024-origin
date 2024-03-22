@@ -119,7 +119,6 @@ public class SSN {
                            // Checksum was correct for SSNs valid for testing systems.
                            result = Result.VALID_TEST_SSN;
                         }
-
                      }
                      }
                   }catch(Exception e){
