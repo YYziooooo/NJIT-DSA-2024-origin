@@ -92,7 +92,7 @@ class BadBookImplementation implements Book {
                 }
             }
         }
-        // Must check the last word in the file too. There may be chars in the array 
+        // Must check the last word in the file too. There may be chars in the array
         // not yet handled, when read() returns -1 to indicate EOF.
         if (currentIndex > 1) {
             String word = new String(array, 0, currentIndex).toLowerCase(Locale.ROOT);

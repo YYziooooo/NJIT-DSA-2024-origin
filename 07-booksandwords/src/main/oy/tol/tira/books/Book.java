@@ -21,7 +21,7 @@ public interface Book {
      * <p>
      * Note: many operating systems like Windows and macOS hide the file name extension from the user by default.
      * This means that even though the file name is, for example, "MyNotes.txt", the user only sees
-     * a file "MyNotes". The "real" file in the file system still has that file name extension. When giving file names 
+     * a file "MyNotes". The "real" file in the file system still has that file name extension. When giving file names
      * as parameters from the user interface, you MUST specify the whole file name, with the file name extension.
      * Also, if the file is somewhere else than where the app is executed from in the command line,
      * the full or relative path MUST be given. The Book implementation MUST NOT change the file name

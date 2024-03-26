@@ -19,7 +19,7 @@ import org.junit.jupiter.api.Timeout;
  */
 //@Timeout(720)
 @DisplayName("Correctness tests for algorithm")
-public class CorrectnessTests 
+public class CorrectnessTests
 {
     /**
      * Test using small.txt
@@ -29,7 +29,7 @@ public class CorrectnessTests
     private String expectedWord = "";
     private int expectedCount = -1;
 
-    @Test 
+    @Test
     public void testFilesNotGiven() {
         Book testTarget = BookFactory.createBook();
         assertNotNull(testTarget, () -> "BookFactory.createBook() returned null.");
@@ -47,7 +47,7 @@ public class CorrectnessTests
         assertDoesNotThrow( () -> { testTarget.setSource(testBook, ignoreFile); }, "Setting test files failed.");
         assertDoesNotThrow( () -> { testTarget.countUniqueWords(); }, "Failed to process the book/ignore files.");
         assertDoesNotThrow( () -> { testTarget.report(); }, "Failed to print out the report.");
-        totalWordCount = -1; 
+        totalWordCount = -1;
         assertDoesNotThrow( () -> { totalWordCount = testTarget.getTotalWordCount(); }, "Failed to get total word count.");
         assertEquals(0, totalWordCount, () -> "Total word count not expected.");
         assertDoesNotThrow( () -> { uniqueWordCount = testTarget.getUniqueWordCount(); }, "Failed to get unique word count.");
@@ -69,7 +69,7 @@ public class CorrectnessTests
         assertDoesNotThrow( () -> { testTarget.setSource(testBook, ignoreFile); }, "Setting test files failed.");
         assertDoesNotThrow( () -> { testTarget.countUniqueWords(); }, "Failed to process the book/ignore files.");
         assertDoesNotThrow( () -> { testTarget.report(); }, "Failed to print out the report.");
-        totalWordCount = -1; 
+        totalWordCount = -1;
         assertDoesNotThrow( () -> { totalWordCount = testTarget.getTotalWordCount(); }, "Failed to get total word count.");
         assertEquals(1, totalWordCount, () -> "Total word count not expected.");
         assertDoesNotThrow( () -> { uniqueWordCount = testTarget.getUniqueWordCount(); }, "Failed to get unique word count.");
@@ -87,7 +87,7 @@ public class CorrectnessTests
         assertNotNull(testTarget, () -> "BookFactory.createBook() returned null.");
         assertThrows(Exception.class, () -> { testTarget.setSource("dfgsehjstjsr43sh5sth.txt", "dfsy56ksthserg4fgsd.txt"); }, "Must throw if book file does not exist.");
         assertThrows(Exception.class, () -> { testTarget.countUniqueWords(); }, "Should throw if using invalid files.");
-        totalWordCount = -1; 
+        totalWordCount = -1;
         assertDoesNotThrow(() -> { testTarget.close(); }, "Should not throw even though files not set/wrong." );
     }
 
@@ -102,7 +102,7 @@ public class CorrectnessTests
         assertDoesNotThrow( () -> { testTarget.setSource(testBook, ignoreFile); }, "Setting test files failed.");
         assertDoesNotThrow( () -> { testTarget.countUniqueWords(); }, "Failed to process the book/ignore files.");
         assertDoesNotThrow( () -> { testTarget.report(); }, "Failed to print out the report.");
-        totalWordCount = -1; 
+        totalWordCount = -1;
         assertDoesNotThrow( () -> { totalWordCount = testTarget.getTotalWordCount(); }, "Failed to get total word count.");
         assertEquals(38, totalWordCount, () -> "Total word count not expected.");
         assertDoesNotThrow( () -> { uniqueWordCount = testTarget.getUniqueWordCount(); }, "Failed to get unique word count.");
@@ -133,7 +133,7 @@ public class CorrectnessTests
             assertDoesNotThrow( () -> { testTarget.setSource(testBook, ignoreFile); }, "Setting test files failed.");
             assertDoesNotThrow( () -> { testTarget.countUniqueWords(); }, "Failed to process the book/ignore files.");
             assertDoesNotThrow( () -> { testTarget.report(); }, "Failed to print out the report.");
-            totalWordCount = -1; 
+            totalWordCount = -1;
             assertDoesNotThrow( () -> { totalWordCount = testTarget.getTotalWordCount(); }, "Failed to get total word count.");
             assertTrue(Math.abs(totalWordCount - 2308) < 5, () -> "Total word count too different from expected.");
             assertDoesNotThrow( () -> { uniqueWordCount = testTarget.getUniqueWordCount(); }, "Failed to get unique word count.");
@@ -165,7 +165,7 @@ public class CorrectnessTests
         assertDoesNotThrow( () -> { testTarget.setSource(testBook, ignoreFile); }, "Setting test files failed.");
         assertDoesNotThrow( () -> { testTarget.countUniqueWords(); }, "Failed to process the book/ignore files.");
         assertDoesNotThrow( () -> { testTarget.report(); }, "Failed to print out the report.");
-        totalWordCount = -1; 
+        totalWordCount = -1;
         assertDoesNotThrow( () -> { totalWordCount = testTarget.getTotalWordCount(); }, "Failed to get total word count.");
         assertTrue(Math.abs(totalWordCount - 455) < 3, () -> "Total word count too different from expected.");
         assertDoesNotThrow( () -> { uniqueWordCount = testTarget.getUniqueWordCount(); }, "Failed to get unique word count.");
@@ -201,7 +201,7 @@ public class CorrectnessTests
         assertDoesNotThrow( () -> { testTarget.setSource(testBook, ignoreFile); }, "Setting test files failed.");
         assertDoesNotThrow( () -> { testTarget.countUniqueWords(); }, "Failed to process the book/ignore files.");
         assertDoesNotThrow( () -> { testTarget.report(); }, "Failed to print out the report.");
-        totalWordCount = -1; 
+        totalWordCount = -1;
         assertDoesNotThrow( () -> { totalWordCount = testTarget.getTotalWordCount(); }, "Failed to get total word count.");
         assertTrue(Math.abs(totalWordCount - 480967) < 20, () -> "Total word count too different from expected.");
         assertDoesNotThrow( () -> { uniqueWordCount = testTarget.getUniqueWordCount(); }, "Failed to get unique word count.");
@@ -237,7 +237,7 @@ public class CorrectnessTests
         assertDoesNotThrow( () -> { testTarget.setSource(testBook, ignoreFile); }, "Setting test files failed.");
         assertDoesNotThrow( () -> { testTarget.countUniqueWords(); }, "Failed to process the book/ignore files.");
         assertDoesNotThrow( () -> { testTarget.report(); }, "Failed to print out the report.");
-        totalWordCount = -1; 
+        totalWordCount = -1;
         assertDoesNotThrow( () -> { totalWordCount = testTarget.getTotalWordCount(); }, "Failed to get total word count.");
         assertTrue(Math.abs(totalWordCount - 2378668) < 100, () -> "Total word count too different (over 100) from expected.");
         assertDoesNotThrow( () -> { uniqueWordCount = testTarget.getUniqueWordCount(); }, "Failed to get unique word count.");

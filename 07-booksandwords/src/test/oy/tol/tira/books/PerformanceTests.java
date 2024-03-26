@@ -21,13 +21,13 @@ import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 @TestMethodOrder(OrderAnnotation.class)
 @DisplayName("Tests using different Book files growing in size")
 public class PerformanceTests {
-    
+
     private static final String outputFileName = "compare.csv";
     private static final String separator = ",";
     private static int currentIndex = 0;
     private static BufferedWriter writer = null;
     private static final String[] testFiles = {"word.txt","tiny.txt","small.txt","MetaMorph.txt","Species.txt","Ulysses.txt","WarPeace.txt","Bulk.txt", "sapmirussian.txt", "japanese.txt"};
-    
+
     @BeforeAll
     static void openOutputFile() {
         try {
@@ -39,7 +39,7 @@ public class PerformanceTests {
         }
     }
 
-    @Test 
+    @Test
     void handleTestFiles() {
         if (null != writer) {
             try {
@@ -53,13 +53,13 @@ public class PerformanceTests {
                     assertNotNull(testBook, () -> "BookFactory.createBook() returned null.");
                     String ignoreFile = getFullPathToTestFile("ignore-words.txt");
                     long start = System.currentTimeMillis();
-                                
+
                     testBook.setSource(path, ignoreFile);
                     testBook.countUniqueWords();
                     testBook.report();
                     long end = System.currentTimeMillis();
                     long duration = end - start;
-                    
+
                     /*
                     testfile,bytes,words,unique words,time,nˆ2,n*m,log(n*m), n*log(n*m)
                     */
@@ -92,7 +92,7 @@ public class PerformanceTests {
                 }
             } catch (Exception e) {
                 fail("Could not write test output file: " + e.getMessage());
-            }    
+            }
         } else {
             fail("Cannot run tests since opening output file writer failed.");
         }

@@ -8,11 +8,11 @@ import java.util.Scanner;
 /**
  * Command line application using the Book interface to count unique words in a book file.
  * <p>
- *  
+ *
  * @author Antti Juustila
  * @version 1.0
  */
-public class BooksAndWords 
+public class BooksAndWords
 {
     /**
      * The main function for the app.
@@ -31,7 +31,7 @@ public class BooksAndWords
      *  <li>Stops measuring time and reports how much time it took to process the book.
      * </ul>
      * If any exceptions happen, reason for those are printed out on the console.
-     * 
+     *
      * @param args Startup parameters are not used by this app.
      */
     public static void main( String[] args )
@@ -42,7 +42,7 @@ public class BooksAndWords
         System.out.println( "in the book. Then the 100 most frequent words are printed out." );
         System.out.println( "App also ignores words in an ignore file." );
         System.out.println( "=============================src/test/resources/===========================================" );
-        
+
         String answer = "n";
         Scanner in = new Scanner(System.in);
         do {
@@ -55,7 +55,7 @@ public class BooksAndWords
                 System.out.println("Processing....");
                 Book theBook = BookFactory.createBook();
                 theBook.setSource(bookFile, wordsToIgnoreFile);
-                theBook.countUniqueWords();  
+                theBook.countUniqueWords();
                 theBook.report();
                 theBook.close();
                 long end = System.currentTimeMillis();
@@ -79,5 +79,5 @@ public class BooksAndWords
         } while (answer.equalsIgnoreCase("Y") || answer.isEmpty());
         in.close();
     }
-    
+
 }
