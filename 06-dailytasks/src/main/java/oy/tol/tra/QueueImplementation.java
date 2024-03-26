@@ -1,4 +1,4 @@
-package oy.yol.tra;
+package oy.tol.tra;
 
 public class QueueImplementation<E> implements QueueInterface<E> {
     private Object[] itemArray;

@@ -9,6 +9,7 @@
         <module name="05-binsearch" />
         <module name="00-init" />
         <module name="04-1-stack (1)" />
+        <module name="booksandwords" />
         <module name="04-1-stack" />
         <module name="04-2-queue (1)" />
         <module name="04-2-queue" />
@@ -25,6 +26,7 @@
       <module name="04-2-queue (1)" target="15" />
       <module name="05-binsearch" target="17" />
       <module name="67-phonebook" target="18" />
+      <module name="booksandwords" target="15" />
     </bytecodeTargetLevel>
   </component>
 </project>

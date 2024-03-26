@@ -1,4 +1,4 @@
-package oy.yol.tra;
+package oy.tol.tra;
 
 import java.io.BufferedReader;
 import java.io.IOException;

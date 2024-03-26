@@ -1,4 +1,4 @@
-package oy.yol.tra;
+package oy.tol.tra;
 
 /**
  * This class instantiates a queue implementing the {@code QueueInterface}.

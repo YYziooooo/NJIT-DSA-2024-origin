@@ -1,4 +1,4 @@
-package oy.yol.tra;
+package oy.tol.tra;
 
 /**
  * A generic interface to queue class. Queues work following 
