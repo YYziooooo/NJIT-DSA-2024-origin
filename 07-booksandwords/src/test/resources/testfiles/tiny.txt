@@ -1,0 +1,5 @@
+This file has only 42 words that count.
+So it is easy to verify the total number of words
+counted by the algorithms.
+This file has also words not counted because they are 1. either too short
+or 2. they are listed in the ignore words file.

@@ -61,7 +61,7 @@ public class KeyValueHashTable<K extends Comparable<K>, V extends Comparable<V>>
         StringBuilder builder = new StringBuilder();
         builder.append(String.format("Hash table load factor is %.2f%n", LOAD_FACTOR));
         builder.append(String.format("Hash table capacity is %d%n", values.length));
-        builder.append(String.format("Current fill rate is %.2f%%%n", (count / (double)values.length) * 100.0));
+        builder.append(String.format("Current fill rate is %.2f%%%n", (count / (double) values.length) * 100.0));
         builder.append(String.format("Hash table had %d collisions when filling the hash table.%n", collisionCount));
         builder.append(String.format("Hash table had to probe %d times in the worst case.%n", maxProbingSteps));
         builder.append(String.format("Hash table had to reallocate %d times.%n", reallocationCount));
@@ -78,7 +78,7 @@ public class KeyValueHashTable<K extends Comparable<K>, V extends Comparable<V>>
         // insert into table when the index has a null in it,
         // return true if existing Person updated or new Person inserted.
         if (key == null) throw new IllegalArgumentException("Key cannot be null.");
-        int index = Math.abs(key.hashCode() % values.length);
+        int index = Math.abs(customHashCode(key) % values.length);
         int originalIndex = index;
         boolean isNewAddition = false; // This will indicate whether a new key-value pair was added.
         int steps = 0;
@@ -114,7 +114,7 @@ public class KeyValueHashTable<K extends Comparable<K>, V extends Comparable<V>>
     public V find(K key) throws IllegalArgumentException {
         if (key == null) throw new IllegalArgumentException("Key cannot be null.");
 
-        int index = Math.abs(key.hashCode() % values.length);
+        int index = Math.abs(customHashCode(key) % values.length);
         int originalIndex = index;
 
         while (values[index] != null && !values[index].getKey().equals(key)) {
@@ -129,8 +129,8 @@ public class KeyValueHashTable<K extends Comparable<K>, V extends Comparable<V>>
 
     @Override
     @SuppressWarnings({"unchecked"})
-    public Pair<K,V> [] toSortedArray() {
-        Pair<K, V> [] sorted = (Pair<K,V>[])new Pair[count];
+    public Pair<K, V>[] toSortedArray() {
+        Pair<K, V>[] sorted = (Pair<K, V>[]) new Pair[count];
         int newIndex = 0;
         for (int index = 0; index < values.length; index++) {
             if (values[index] != null) {
@@ -148,7 +148,7 @@ public class KeyValueHashTable<K extends Comparable<K>, V extends Comparable<V>>
         }
         reallocationCount++;
         Pair<K, V>[] oldPairs = values;
-        this.values = (Pair<K, V>[]) new Pair[(int)((double)newSize * (1.0 + LOAD_FACTOR))];
+        this.values = (Pair<K, V>[]) new Pair[(int) ((double) newSize * (1.0 + LOAD_FACTOR))];
         count = 0;
         collisionCount = 0;
         maxProbingSteps = 0;
@@ -161,10 +161,18 @@ public class KeyValueHashTable<K extends Comparable<K>, V extends Comparable<V>>
 
     @Override
     public void compress() throws OutOfMemoryError {
-        int newCapacity = (int)(count * (1.0 / LOAD_FACTOR));
+        int newCapacity = (int) (count * (1.0 / LOAD_FACTOR));
         if (newCapacity < values.length) {
             reallocate(newCapacity);
         }
+    }
+    private int customHashCode(K key) {
+        int hash = 0;
+        String keyString = key.toString();
+        for (int i = 0; i < keyString.length(); i++) {
+            hash = 31 * hash + keyString.charAt(i);
+        }
+        return hash;
     }
 
 }

@@ -39,10 +39,16 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V extends Comparable<V
     public String getStatus() {
         String toReturn = "Tree has max depth of " + maxTreeDepth + ".\n";
         toReturn += "Longest collision chain in a tree node is " + TreeNode.longestCollisionChain + "\n";
-        TreeAnalyzerVisitor<K, V> visitor = new TreeAnalyzerVisitor<>();
-        root.accept(visitor);
-        toReturn += "Min path height to bottom: " + visitor.minHeight + "\n";
-        toReturn += "Max path height to bottom: " + visitor.maxHeight + "\n";
+        if(root == null){
+            toReturn += "The tree is empty.\n";
+            toReturn += "Min path height to bottom: 0\n";
+            toReturn += "Max path height to bottom: 0\n";
+        }else{
+            TreeAnalyzerVisitor<K, V> visitor = new TreeAnalyzerVisitor<>();
+            root.accept(visitor);
+            toReturn += "Min path height to bottom: " + visitor.minHeight + "\n";
+            toReturn += "Max path height to bottom: " + visitor.maxHeight + "\n";
+        }
         toReturn += "Ideal height if balanced: " + Math.ceil(Math.log(count)) + "\n";
         return toReturn;
     }
@@ -67,7 +73,7 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V extends Comparable<V
             return true;
         } else {
             int depthBefore = TreeNode.currentAddTreeDepth;
-            int added = root.insert(key, value, key.hashCode());
+            int added = root.insert(key, value, customHashCode(key));
             int depthAfter = TreeNode.currentAddTreeDepth;
             TreeNode.currentAddTreeDepth = 0; // Reset for next addition
             if (added > 0) {
@@ -86,7 +92,7 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V extends Comparable<V
         if (key == null) {
             throw new IllegalArgumentException("Key cannot be null.");
         }
-        return (root != null) ? root.find(key, key.hashCode()) : null;
+        return (root != null) ? root.find(key, customHashCode(key)) : null;
     }
 
     @Override
@@ -96,6 +102,9 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V extends Comparable<V
 
     @Override
     public Pair<K, V>[] toSortedArray() {
+        if (root == null) {
+            return new Pair[0];
+        }
         TreeToArrayVisitor<K, V> visitor = new TreeToArrayVisitor<>(count);
         root.accept(visitor);
         Pair<K, V>[] sorted = visitor.getArray();
@@ -109,4 +118,12 @@ public class KeyValueBSearchTree<K extends Comparable<K>, V extends Comparable<V
         // structures.
     }
 
+    private int customHashCode(K key) {
+        int hash = 0;
+        String keyString = key.toString();
+        for (int i = 0; i < keyString.length(); i++) {
+            hash = 31 * hash + keyString.charAt(i);
+        }
+        return hash;
+    }
 }

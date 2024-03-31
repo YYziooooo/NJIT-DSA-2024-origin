@@ -59,59 +59,35 @@ public class Algorithms {
     }
 
     public static <E extends Comparable<E>> void quickSort(E[] array, int begin, int end) {
-        if (begin >= end) {
-            return;
+        if (begin < end) {
+            int partitionIndex = hoarePartition(array, begin, end);
+            quickSort(array, begin, partitionIndex);
+            quickSort(array, partitionIndex + 1, end);
         }
-        int partitionIndex = partition(array, begin, end);
-        quickSort(array, begin, partitionIndex - 1);
-        quickSort(array, partitionIndex + 1, end);
     }
-    // sort in ascending order:
-//    private static <E extends Comparable<E>> int partition(E[] array, int begin, int end) {
-////      //first method:
-////        E pivot = array[end];
-////        int i = begin - 1;
-////        for (int j = begin; j < end; j++) {
-////            if (array[j].compareTo(pivot) <= 0) {
-////                i++;
-////                swap(array, i, j);
-////            }
-////        }
-////        swap(array, i + 1, end);
-////        return i + 1;
-//        //second method:
-//        E pivot = array[end];
-//        int leftPointer = begin;
-//        int rightPointer = end;
-//        while (leftPointer < rightPointer) {
-//            while (leftPointer < rightPointer && array[leftPointer].compareTo(pivot) < 0) {
-//                leftPointer++;
-//            }
-//            while (leftPointer < rightPointer && array[rightPointer].compareTo(pivot) > 0) {
-//                rightPointer--;
-//            }
-//            swap(array, leftPointer, rightPointer);
-//        }
-//        return leftPointer;
-//    }
-    //Sort in descending order:
-    private static <E extends Comparable<E>> int partition(E[] array, int begin, int end) {
-        E pivot = array[end];
-        int leftPointer = begin - 1;
+    private static <E extends Comparable<E>> int hoarePartition(E[] array, int begin, int end) {
+        E pivot = array[begin];
+        int left = begin - 1;
+        int right = end + 1;
+        while (true) {
+            // Move right pointer to the left, find an element less than or equal to pivot
+            do {
+                right--;
+            } while (array[right].compareTo(pivot) < 0);
 
-        for (int j = begin; j < end; j++) {
-            if (array[j].compareTo(pivot) > 0) { // Change this comparison for descending order
-                leftPointer++;
-                swap(array, leftPointer, j);
+            // Move left pointer to the right, find an element greater than pivot
+            do {
+                left++;
+            } while (array[left].compareTo(pivot) > 0);
+
+            // Check if pointers have crossed, and swap if not
+            if (left < right) {
+                swap(array, left, right);
+            } else {
+                return right;
             }
         }
-
-        // Swap pivot into the correct position
-        swap(array, leftPointer + 1, end);
-
-        return leftPointer + 1; // Return the final position of the pivot
     }
-
 
     private static <E> void swap(E[] array, int index1, int index2) {
         E temp = array[index1];
@@ -163,4 +139,34 @@ public class Algorithms {
             if (!swapped) break;
         }
     }
+
+    // sort in ascending order:
+
+//    private static <E extends Comparable<E>> int partition(E[] array, int begin, int end) {
+////      //first method:
+////        E pivot = array[end];
+////        int i = begin - 1;
+////        for (int j = begin; j < end; j++) {
+////            if (array[j].compareTo(pivot) <= 0) {
+////                i++;
+////                swap(array, i, j);
+////            }
+////        }
+////        swap(array, i + 1, end);
+////        return i + 1;
+//        //second method:
+//        E pivot = array[end];
+//        int leftPointer = begin;
+//        int rightPointer = end;
+//        while (leftPointer < rightPointer) {
+//            while (leftPointer < rightPointer && array[leftPointer].compareTo(pivot) < 0) {
+//                leftPointer++;
+//            }
+//            while (leftPointer < rightPointer && array[rightPointer].compareTo(pivot) > 0) {
+//                rightPointer--;
+//            }
+//            swap(array, leftPointer, rightPointer);
+//        }
+//        return leftPointer;
+//    }
 }
