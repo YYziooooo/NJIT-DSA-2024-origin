@@ -1,109 +1,76 @@
 package oy.tol.tra;
 
 public class Algorithms {
-
-    private Algorithms() {
-        // Empty
-    }
-
-    /**
-     * Performs a binary search on the specified array for the specified value.
-     *
-     * @param value     The value to search for.
-     * @param array     The array to search in.
-     * @param fromIndex The index to start searching from.
-     * @param toIndex   The index to end searching (inclusive).
-     * @return The index of the value if found, otherwise -1.
-     */
-    public static int binarySearch(int value, Integer[] array, int fromIndex, int toIndex) {
-        while (fromIndex <= toIndex) {
-            int mid = (fromIndex + toIndex) / 2;
-            if (array[mid] == value)
-                return mid;
-            else if (array[mid] < value)
-                fromIndex = mid + 1;
-            else
-                toIndex = mid - 1;
+    public static <T> void reverse(T[] array) {
+        int i = 0;
+        int j = array.length - 1;
+        while (i < j) {
+            T temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
+            i++;
+            j--;
         }
-        return -1;
     }
 
-    /**
-     * Sorts the given array in ascending order using bubble sort algorithm.
-     *
-     * @param array The array to be sorted.
-     */
-    public static void sort(Integer[] array) {
-        boolean swapped;
-        int n = array.length;
-        do {
-            swapped = false;
-            for (int i = 1; i < n; i++) {
-                if (array[i - 1] > array[i]) {
-                    int temp = array[i - 1];
-                    array[i - 1] = array[i];
-                    array[i] = temp;
-                    swapped = true;
-                }
+    //slow linear search
+    public static <T> int slowLinearSearch(T aValue, T[] fromArray, int fromIndex, int toIndex) {
+        for (int index = fromIndex; index < toIndex; index++) {
+            if (fromArray[index].equals(aValue)) {
+                return index;
             }
-            n--;
-        } while (swapped);
-    }
-
-    /**
-     * Performs a binary search on the specified array for the specified value.
-     *
-     * @param s         The string to search for.
-     * @param array     The array to search in.
-     * @param fromIndex The index to start searching from.
-     * @param toIndex   The index to end searching (inclusive).
-     * @return The index of the value if found, otherwise -1.
-     */
-    public static int binarySearch(String s, String[] array, int fromIndex, int toIndex) {
-        while (fromIndex <= toIndex) {
-            int mid = (fromIndex + toIndex) / 2;
-            int cmp = s.compareTo(array[mid]);
-            if (cmp == 0)
-                return mid;
-            else if (cmp < 0)
-                toIndex = mid - 1;
-            else
-                fromIndex = mid + 1;
         }
         return -1;
     }
 
-    /**
-     * Sorts the given array of strings in lexicographical order using quick sort algorithm.
-     *
-     * @param array The array of strings to be sorted.
-     */
-    public static void sort(String[] array) {
+    public static <T extends Comparable<T>> int binarySearch(T aValue, T[] fromArray, int fromIndex, int toIndex) {
+        while (fromIndex <= toIndex) {
+            int midIndex = fromIndex + (toIndex - fromIndex) / 2;
+            int compareResult = fromArray[midIndex].compareTo(aValue);
+            if (compareResult == 0) {
+                return midIndex;
+            } else if (compareResult < 0) {
+                fromIndex = midIndex + 1;
+            } else {
+                toIndex = midIndex - 1;
+            }
+        }
+        return -1;
+    }
+
+    public static <E extends Comparable<E>> void fastSort(E[] array) {
         quickSort(array, 0, array.length - 1);
     }
 
-    private static void quickSort(String[] array, int low, int high) {
-        if (low < high) {
-            int pivotIndex = partition(array, low, high);
-            quickSort(array, low, pivotIndex - 1);
-            quickSort(array, pivotIndex + 1, high);
+    public static <E extends Comparable<E>> void quickSort(E[] array, int begin, int end) {
+        if (begin >= end) {
+            return;
         }
+        int partitionIndex = partition(array, begin, end);
+        quickSort(array, begin, partitionIndex - 1);
+        quickSort(array, partitionIndex + 1, end);
     }
 
-    private static int partition(String[] array, int low, int high) {
-        String pivot = array[high];
-        int i = low - 1;
-        for (int j = low; j < high; j++) {
-            if (array[j].compareTo(pivot) < 0) {
-                i++;
-                String temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
+    private static <E extends Comparable<E>> int partition(E[] array, int begin, int end) {
+
+        E pivot = array[end];
+        int leftPointer = begin;
+        int rightPointer = end;
+        while (leftPointer < rightPointer) {
+            while (leftPointer < rightPointer && array[leftPointer].compareTo(pivot) < 0) {
+                leftPointer++;
             }
+            while (leftPointer < rightPointer && array[rightPointer].compareTo(pivot) > 0) {
+                rightPointer--;
+            }
+            swap(array, leftPointer, rightPointer);
         }
-        String temp = array[i + 1];
-        array[i + 1] = array[high];
-        array[high] = temp;
-        return i + 1;
+        return leftPointer;
+    }
+
+    private static <E> void swap(E[] array, int index1, int index2) {
+        E temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
     }
 }
