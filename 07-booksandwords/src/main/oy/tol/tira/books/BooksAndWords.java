@@ -12,8 +12,7 @@ import java.util.Scanner;
  * @author Antti Juustila
  * @version 1.0
  */
-public class BooksAndWords
-{
+public class BooksAndWords {
     /**
      * The main function for the app.
      * <p>

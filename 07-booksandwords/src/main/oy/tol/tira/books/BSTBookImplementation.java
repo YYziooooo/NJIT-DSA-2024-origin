@@ -7,24 +7,12 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 
-/**
- * Really bad book. Uses linear arrays with O(n^2) loops within loops,
- * bubble sort etc.
- */
-class BadBookImplementation implements Book {
-
-    private class WordCount {
-        WordCount() {
-            word = "";
-            count = 0;
-        }
-        String word;
-        int count;
-    }
+public class BSTBookImplementation implements Book {
 
     private static final int MAX_WORDS = 100000;
     private static final int MAX_WORD_LEN = 100;
-    private WordCount[] words = null;
+    KeyValueBSearchTree<String, Integer> words = null;
+    Pair<String,Integer>[] sorted;
     private String bookFile = null;
     private String wordsToIgnoreFile = null;
     private WordFilter filter = null;
@@ -35,7 +23,7 @@ class BadBookImplementation implements Book {
 
     @Override
     public void setSource(String fileName, String ignoreWordsFile) throws FileNotFoundException {
-        // Check if both files exist. If not, throw an exception.
+// Check if both files exist. If not, throw an exception.
         boolean success = false;
         if (checkFile(fileName)) {
             bookFile = fileName;
@@ -60,10 +48,7 @@ class BadBookImplementation implements Book {
         loopCount = 0;
         ignoredWordsTotal = 0;
         // Create an array for the words.
-        words = new WordCount[MAX_WORDS];
-        for (int index = 0; index < MAX_WORDS; index++) {
-            words[index] = new WordCount();
-        }
+        words = new KeyValueBSearchTree<>();
         // Create the filter class to handle filtering.
         filter = new WordFilter();
         // Read the words to filter.
@@ -102,44 +87,32 @@ class BadBookImplementation implements Book {
         reader.close();
     }
 
-    private void addToWords(String word) throws OutOfMemoryError {
-        // Filter out too short words or words in filter list.
+    private void addToWords(String word) {
         if (!filter.shouldFilter(word) && word.length() >= 2) {
-            boolean handled = false;
-            // Go through the words found so far...
-            // NB: ...the !handled in evaluating if loop should be continued...
-            for (int index = 0; index < MAX_WORDS && !handled; index++) {
-                loopCount++;
-                // If we meet an empty word, this word was not found so far so add it then.
-                if (words[index].word.length() == 0) {
-                    words[index].word = word;
-                    words[index].count = 1;
-                    uniqueWordCount += 1;
-                    totalWordCount += 1;
-                    handled = true;
-                    // If array is full, then abort after cleaning up.
-                    if (uniqueWordCount >= MAX_WORDS) {
-                        throw new OutOfMemoryError("No room for more words in array");
-                    }
-                } else if (words[index].word.equals(word)) {
-                    // Word was found so update the counts, flag.
-                    words[index].count += 1;
-                    totalWordCount += 1;
-                    handled = true;
-                }
+            if (words.size()==0){
+                words.add(word,1);
+                uniqueWordCount+=1;
+                totalWordCount+=1;
+                return;
             }
-            // If word was not added or an existing count updated, array is full.
-            if (!handled) {
-                throw new OutOfMemoryError("No room for more words in array");
+            Integer currentCount = 0;
+            if (words.find(word)==null){
+                currentCount = 1;
+                uniqueWordCount += 1;
+            }else {
+                currentCount = words.find(word)+1;
             }
+            words.add(word,currentCount);
+            totalWordCount += 1;
         } else {
             ignoredWordsTotal++;
         }
+
     }
 
     @Override
     public void report() {
-        if (words == null) {
+        if (words.size() == 0) {
             System.out.println("*** No words to report! ***");
             return;
         }
@@ -147,21 +120,21 @@ class BadBookImplementation implements Book {
         System.out.println("Ignoring words from a file: " + wordsToIgnoreFile);
         System.out.println("Sorting the results...");
         // First sort the array
-        sortWords();
+        sorted = words.toSortedArray();
+        Algorithms.reverse(sorted);
         System.out.println("...sorted.");
 
-        for (int index = 0; index < 100; index++) {
-            if (words[index].word.length() == 0) {
-                break;
-            }
-            String word = String.format("%-20s", words[index].word).replace(' ', '.');
-            System.out.format("%4d. %s %6d%n", index + 1, word, words[index].count);
+        for (int index = 0; index < 100 && index<sorted.length; index++) {
+            String word = String.format("%-20s",sorted[index].getKey()).replace(' ', '.');
+            System.out.format("%4d. %s %6d%n", index + 1, word, sorted[index].getValue());
         }
         System.out.println("Count of words in total: " + totalWordCount);
         System.out.println("Count of unique words:    " + uniqueWordCount);
         System.out.println("Count of words to ignore:    " + filter.ignoreWordCount());
         System.out.println("Ignored words count:      " + ignoredWordsTotal);
         System.out.println("How many times the inner loop rolled: " + loopCount);
+        System.out.println("\nInformation for BST implementation");
+        System.out.println(words.getStatus());
     }
 
     @Override
@@ -187,16 +160,16 @@ class BadBookImplementation implements Book {
 
     @Override
     public String getWordInListAt(int position) {
-        if (words != null && position >= 0 && position < uniqueWordCount) {
-            return words[position].word;
+        if (sorted != null && position >= 0 && position < uniqueWordCount) {
+            return sorted[position].getKey();
         }
         return null;
     }
 
     @Override
     public int getWordCountInListAt(int position) {
-        if (words != null && position >= 0 && position < uniqueWordCount) {
-            return words[position].count;
+        if (sorted != null && position >= 0 && position < uniqueWordCount) {
+            return sorted[position].getValue();
         }
         return -1;
     }
@@ -210,24 +183,4 @@ class BadBookImplementation implements Book {
         }
         return false;
     }
-
-    private void sortWords() {
-        // Uses bubble sort which is a lousy one, but hey this is BadBookImplementation.
-        int sortSize = uniqueWordCount;
-        int index = 0;
-        int newSize = 0;
-        do {
-            newSize = 0;
-            for (index = 1; index < sortSize; index++) {
-                if (words[index - 1].count < words[index].count) {
-                    WordCount temp = words[index - 1];
-                    words[index - 1] = words[index];
-                    words[index] = temp;
-                    newSize = index;
-                }
-            }
-            sortSize = newSize;
-        } while (sortSize > 1);
-    }
-
 }
