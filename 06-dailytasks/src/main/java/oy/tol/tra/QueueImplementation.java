@@ -1,22 +1,32 @@
 package oy.tol.tra;
 
-public class QueueImplementation<E> implements QueueInterface<E> {
-    private Object[] itemArray;
+public class QueueImplementation<E> implements QueueInterface<E>{
+
+    private Object [] itemArray;
     private int capacity;
-    private int size = 0;
     private int head = 0;
     private int tail = 0;
-
-    public QueueImplementation() {
-
+    private int size = 0;
+    private static final int DEFAULT_QUEUE_SIZE = 10;
+    public QueueImplementation() throws QueueAllocationException{
+        // call the constructor with size parameter with default size of 10
+        this(DEFAULT_QUEUE_SIZE);
     }
 
-    public QueueImplementation(int capacity) {
-        this.capacity = capacity;
-        this.itemArray = (E[]) new Object[capacity];
-        this.head = 0;
-        this.tail = 0;
-        this.size = 0;
+    public QueueImplementation(int capacity) throws QueueAllocationException {
+        if (capacity<2){
+            throw  new QueueAllocationException("Capacity must greater than 2");
+        }
+        try {
+            itemArray = new Object[capacity];
+            this.capacity = capacity;
+            //To initialize the data, the index of head and tail is 0 and the value of size is 0
+            head = 0;
+            tail = 0;
+            size = 0;
+        } catch (OutOfMemoryError e) {
+            throw new QueueAllocationException("Failed to allocate memory for the stack.");
+        }
     }
 
 
@@ -27,47 +37,72 @@ public class QueueImplementation<E> implements QueueInterface<E> {
 
     @Override
     public void enqueue(E element) throws QueueAllocationException, NullPointerException {
-        if (element == null) {
-            throw new NullPointerException("Cannot enqueue null element.");
+        if (element == null){
+            throw new NullPointerException("The element to enqueue can't be null");
         }
-        if (size == capacity) {
+        //Beyond capacity, create a new array twice the size of the original array
+        //then copy the data from the original array to the new array
+        if (size >= capacity){
             try {
                 int newCapacity = 2 * capacity;
-                Object[] newArray = new Object[newCapacity];
-                for (int i = 0; i < size; i++) {
-                    newArray[i] = itemArray[(head + i) % capacity];
+                Object [] newArray = new Object[newCapacity];
+                int i = 0;
+                //There is size of data to copy to the new array
+                while (i<size){
+                    //If the index is smaller than capacity, use it directly.
+                    // Otherwise, the index is recalculated
+                    if (head+i<capacity){
+                        newArray[i] = itemArray[head+i];
+                    }else {
+                        //i-(capacity-head) is the new index
+                        //This is usually the case when the tail address in the computer comes before the head
+                        newArray[i] = itemArray[i-(capacity-head)];
+                    }
+                    i++;
                 }
                 itemArray = newArray;
-                head = 0;
-                tail = size;
                 capacity = newCapacity;
+                //The header changes to 0
+                head = 0;
+                //Tail is size
+                tail = size;
             } catch (OutOfMemoryError e) {
-                throw new QueueAllocationException("Cannot allocate more room for the queue.");
+                throw new QueueAllocationException("Failed to allocate more room for the stack.");
             }
         }
+        //Normal add operation
         itemArray[tail] = element;
-        tail = (tail + 1) % capacity;
+        if (tail == capacity-1){
+            tail = 0;
+        }else {
+            tail = tail+1;
+        }
         size++;
     }
 
     @Override
     public E dequeue() throws QueueIsEmptyException {
-        if (isEmpty()) {
-            throw new QueueIsEmptyException("Queue is empty");
+        if (head == tail && size != capacity){
+            throw new QueueIsEmptyException("There's no data in the queue");
         }
-        E element = (E) itemArray[head];
-        itemArray[head] = null;
-        head = (head + 1) % capacity;
+        Object dequeueElement = itemArray[head];
+
+        if (head == capacity-1){
+            head = 0;
+        }else {
+            head = head+1;
+        }
         size--;
-        return element;
+        return (E) dequeueElement;
     }
 
     @Override
     public E element() throws QueueIsEmptyException {
-        if (size == 0) {
-            throw new QueueIsEmptyException("Queue is empty.");
+        if (head == tail && size != capacity){
+            throw new QueueIsEmptyException("There's no data in the queue");
         }
-        return (E) itemArray[head];
+        Object el = itemArray[head];
+        return (E) el;
     }
 
     @Override
@@ -77,31 +112,36 @@ public class QueueImplementation<E> implements QueueInterface<E> {
 
     @Override
     public boolean isEmpty() {
-        return size == 0;
+        if (head == tail && size != capacity){
+            return true;
+        }
+        else return false;
     }
 
     @Override
     public void clear() {
-        for (int i = 0; i < capacity; i++) {
+        for (int i=0;i <capacity;i++){
             itemArray[i] = null;
         }
-        this.head = 0;
-        this.tail = 0;
-        this.size = 0;
+        head = 0;
+        tail = 0;
+        size = 0;
     }
 
     @Override
     public String toString() {
-        if (size == 0) {
-            return "[]";
-        }
-        StringBuilder builder = new StringBuilder();
-        builder.append("[");
-        for (int i = 0; i < size; i++) {
-            builder.append(itemArray[(head + i) % capacity].toString());
-            if (i < size - 1) {
+        StringBuilder builder = new StringBuilder("[");
+        int i = 0;
+        while (i<size){
+            if (head+i<capacity){
+                builder.append(itemArray[head+i].toString());
+            }else {
+                builder.append(itemArray[i-(capacity-head)].toString());
+            }
+            if (i < size-1) {
                 builder.append(", ");
             }
+            i++;
         }
         builder.append("]");
         return builder.toString();

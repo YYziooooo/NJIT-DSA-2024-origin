@@ -1,11 +1,12 @@
 package oy.tol.tra;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * A class showing your daily schedule using a timer.
+ */
 public class DailyTasks {
 
    private QueueInterface<String> dailyTaskQueue = null;
@@ -26,26 +27,26 @@ public class DailyTasks {
 
    private void run() {
       try {
-         // Create a queue for daily tasks
-         dailyTaskQueue = new QueueImplementation<>();
-
-         // Read the tasks for today
+         // TODO:
+         // 1. create a queue (to the member variable!) for daily tasks, which are strings.
+         dailyTaskQueue = new QueueImplementation<String>();
+         // 2. read the tasks for today by calling readTasks() -- implementing missing parts of it!
          readTasks();
-
-         // Create Java Timer object
+         // 3. create Java Timer object (to member variable) to schedule your daily tasks. (Already given to you.)
          timer = new Timer();
-
-         // Schedule the timer at fixed rate with a new TimerTask
+         // 4. schedule the timer at fixed rate with a new TimerTask,
+         //  using the delay constant values in the class member variable. (Already given to you.)
          timer.scheduleAtFixedRate(new TimerTask() {
+            // 4.1 in the timer task run:
             @Override
             public void run() {
-               // Check if there are tasks in the queue
+               // 4.1.1 check if there are tasks in the queue:
                if (!dailyTaskQueue.isEmpty()) {
-                  // If yes, print the task from the queue, dequeueing it
-                  String task = dailyTaskQueue.dequeue();
-                  System.out.println(task);
-               } else {
-                  // If not, cancel the timer
+                  // 4.1.2 if yes, print the task from the queue, dequeueing it.
+                  System.out.println(dailyTaskQueue.element());
+                  dailyTaskQueue.dequeue();
+               }else {
+                  // 4.1.3 if not, cancel the timer.
                   timer.cancel();
                }
             }
@@ -56,17 +57,14 @@ public class DailyTasks {
    }
 
    private void readTasks() throws IOException {
-      // Read tasks from file
-      InputStreamReader isr = new InputStreamReader(getClass().getClassLoader().getResourceAsStream("DailyTasks.txt"));
-      BufferedReader reader = new BufferedReader(isr);
-      String line;
-      while ((line = reader.readLine()) != null) {
-         // Enqueue the task to the Queue implementation
-         dailyTaskQueue.enqueue(line);
+      String tasks;
+      tasks = new String(getClass().getClassLoader().getResourceAsStream("DailyTasks.txt").readAllBytes());
+      String[] allTasks = tasks.split("\\r?\\n");
+      for (String task : allTasks) {
+         // TODO: Enqueue the task to your Queue implementation:
+         dailyTaskQueue.enqueue(task);
       }
-      reader.close();
-
-      // Print out the number of tasks in the queue
-      System.out.println("Number of tasks in the queue: " + dailyTaskQueue.size());
+      // TODO: print out to the console the number of tasks in the queue:
+      System.out.println(dailyTaskQueue.size());
    }
 }

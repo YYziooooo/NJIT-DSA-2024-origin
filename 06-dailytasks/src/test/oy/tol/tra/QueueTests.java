@@ -323,7 +323,7 @@ import org.junit.jupiter.api.Order;
     
     /**
      * Utility method to create a random size queue.
-     * @param itemCount
+
      * @return
      */
     private int randomQueueSize() {
